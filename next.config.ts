@@ -70,6 +70,30 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: false,
   },
 
+  // 301s for every indexed path of the old Framer site. The old blog carried
+  // the cross-posted essays (canonical home is now /log); /work and /hotels
+  // were the film portfolio (now /films); the lifestyle posts have no heir and
+  // land on the homepage rather than a 404. Preserving these is what carries
+  // whatever authority the old URLs earned over to the new entity home.
+  async redirects() {
+    return [
+      { source: "/work", destination: "/films", permanent: true },
+      { source: "/work/:slug*", destination: "/films", permanent: true },
+      { source: "/hotels", destination: "/films", permanent: true },
+      { source: "/blog", destination: "/log", permanent: true },
+      {
+        source: "/blog/:slug(.*0-to-40.*|.*40-clients.*)",
+        destination: "/log/zero-to-forty",
+        permanent: true,
+      },
+      { source: "/blog/:slug*", destination: "/log", permanent: true },
+      { source: "/how-to-study", destination: "/", permanent: true },
+      { source: "/time-management", destination: "/", permanent: true },
+      { source: "/digital-organization", destination: "/", permanent: true },
+      { source: "/the-process", destination: "/about", permanent: true },
+    ];
+  },
+
   async headers() {
     return [
       {

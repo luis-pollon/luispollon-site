@@ -127,10 +127,16 @@ export default function Page() {
       </section>
 
       <p className="note">
-        Private tool — demo on request. It runs on live client data, so there is
-        no public URL and there will not be one until there is a demonstration
-        workspace with invented names in it. I will walk anyone through the real
-        thing on a call: <a href="mailto:hi@luispollon.com">hi@luispollon.com</a>
+        The production system runs on live client data, so what is public is a{" "}
+        <a
+          href="https://studio.unsunkproductions.com/demo"
+          rel="noopener noreferrer"
+        >
+          demonstration workspace
+        </a>{" "}
+        — same software, invented clients. For the real thing, I will walk you
+        through it on a call:{" "}
+        <a href="mailto:hi@luispollon.com">hi@luispollon.com</a>
       </p>
     </main>
   );
