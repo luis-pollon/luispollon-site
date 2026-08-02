@@ -1,0 +1,118 @@
+/* =========================================================================
+   /about — page-scoped styles
+
+   Everything that is shared already lives in globals.css (rail, h1/h2, small
+   caps, mono, rules, footer). This file only adds what exists nowhere else:
+   the portrait, the credential list, the canonical-bio block and the Now list.
+   Scoped as a CSS Module so this page can never move another page's type.
+
+   No drop cap here. The site gets exactly one, and it is on the home page.
+   ========================================================================= */
+
+/* ---------- portrait ---------- */
+.portrait {
+  float: right;
+  width: 124px;
+  margin: 0.4rem 0 1rem 1.6rem;
+}
+
+/* The frame is 3:4 by declaration, not by whatever happens to be at
+   /public/luis.jpg — the same ratio the home page reserves for the portrait.
+   `cover` means a re-cropped photo dropped in later still fills the frame
+   instead of changing the shape of the page. */
+.portrait img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: 50% 30%;
+  border: 1px solid var(--rule);
+  background: var(--paper-alt);
+}
+
+/* ---------- the standing line, set apart by rules like the home facts ---- */
+.standing {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 0.9rem 0;
+  margin: 1.8rem 0 3.4rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- credentials ---------- */
+.creds {
+  list-style: none;
+}
+
+.creds li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.creds li:first-child {
+  border-top: 1px solid var(--rule);
+}
+
+/* The serif carries the voice; the mono carries the facts. Years, figures,
+   handles and counts are always mono, on this site and on every page of it. */
+.credFact {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- canonical bio ---------- */
+.bio {
+  border-left: 1px solid var(--rule);
+  padding-left: 1.3rem;
+}
+
+.bioLabel {
+  display: block;
+  color: var(--ink-soft);
+  opacity: 0.8;
+  margin-bottom: 0.55rem;
+}
+
+.bioNote {
+  margin-top: 1rem;
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
+
+/* ---------- now ---------- */
+.dateline {
+  display: block;
+  color: var(--ink-soft);
+  margin: -0.9rem 0 1.3rem;
+}
+
+.now {
+  list-style: none;
+}
+
+.now li {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.now li:first-child {
+  border-top: 1px solid var(--rule);
+}
+
+.nowTitle {
+  font-size: 1.12rem;
+}
+
+.nowDesc {
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  margin-top: 0.1rem;
+}
+
+@media (max-width: 720px) {
+  .portrait {
+    width: 96px;
+    margin-left: 1.1rem;
+  }
+}

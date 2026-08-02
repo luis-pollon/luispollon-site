@@ -1,0 +1,231 @@
+/* =========================================================================
+   /log — page-scoped styles for the index and for the posts.
+
+   Everything shared already lives in globals.css: the rail, h1/h2, real small
+   caps, .mono, .etym, the rules, the footer. This file adds only what the Log
+   needs and nowhere else has — the register list, the post dateline, the
+   opening claim, the pull quote, and the video card.
+
+   No drop cap. The site gets exactly one and it is on the home page. A post
+   that opened with a drop cap would be the second, and then the device stops
+   meaning anything.
+
+   The division of labour is the same as every other page: the serif carries
+   the voice, the mono carries the facts. Dates, figures, view counts, read
+   times and durations are mono without exception.
+   ========================================================================= */
+
+/* ---------- the register (index) ---------- */
+.register {
+  list-style: none;
+}
+
+.register li {
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.register li:first-child {
+  border-top: 1px solid var(--rule);
+}
+
+.entryTitle {
+  font-size: 1.2rem;
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.entryTitle:hover {
+  color: var(--accent);
+}
+
+/* The one line of value. Not a teaser — the argument, compressed. Someone who
+   reads only this line should still have learned the thing. */
+.entryStandfirst {
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  margin-top: 0.2rem;
+}
+
+.entryMeta {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- post chrome ---------- */
+.crumb {
+  display: block;
+  margin-bottom: 2.2rem;
+  color: var(--ink-soft);
+}
+
+.crumb a {
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.crumb a:hover {
+  color: var(--accent);
+}
+
+/* Post titles are long sentences, not one-word section headings, so they run
+   at a smaller size than the h1 the section pages use. */
+.postTitle {
+  font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+  line-height: 1.16;
+  letter-spacing: -0.005em;
+  margin-bottom: 0.7rem;
+  max-width: 28ch;
+}
+
+.postMeta {
+  display: block;
+  color: var(--ink-soft);
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 1.8rem;
+}
+
+/* The first paragraph carries the conclusion. Anything that quotes this page
+   without reading it — a person skimming, a model summarizing — should still
+   come away with the finding rather than a hook. It is set larger and in
+   italic for the same reason the promise line on the home page is. */
+.claim {
+  font-size: 1.22rem;
+  line-height: 1.5;
+  font-style: italic;
+  margin-bottom: 1.4rem;
+}
+
+.post h2 {
+  margin-top: 2.6rem;
+}
+
+.post p + p {
+  margin-top: 1.1rem;
+}
+
+/* Inline emphasis inside a post is the roman small cap, never bold and never
+   a colour. `strong` is reset to 400 globally; this gives the step names and
+   the terms of art somewhere to live. */
+.term {
+  font-variant-caps: small-caps;
+  letter-spacing: 0.06em;
+}
+
+/* A line of Luis's own, or a line from a call. Rule on the left, like the
+   canonical bio on /about — the site has exactly one quotation device. */
+.pull {
+  border-left: 1px solid var(--rule);
+  padding-left: 1.3rem;
+  margin: 1.4rem 0;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* The tabulated figures: a pipeline, a funnel, a spend. Mono, because they
+   are facts, and scrollable on its own axis so the page body never does. */
+.ledger {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+/* `min-width` is the point below which the columns would collide, not a
+   target — at 18rem the whole table still fits inside the text column on a
+   375px phone, so the wrapper's scrollbar is a safety net rather than
+   something a reader has to use. The page body never scrolls sideways either
+   way; the overflow is the wrapper's, not the document's. */
+.ledger table {
+  border-collapse: collapse;
+  min-width: 18rem;
+  width: 100%;
+}
+
+.ledger caption {
+  text-align: left;
+  color: var(--ink-soft);
+  padding-bottom: 0.6rem;
+}
+
+.ledger th,
+.ledger td {
+  text-align: left;
+  padding: 0.4rem 1.2rem 0.4rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-weight: 400;
+}
+
+.ledger th {
+  color: var(--ink-soft);
+}
+
+.ledger td:last-child {
+  text-align: right;
+  padding-right: 0;
+  white-space: nowrap;
+}
+
+/* The closing pointer out of a post — to a case, or to another entry. */
+.onward {
+  margin-top: 2.4rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--rule);
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+}
+
+/* ---------- video card ----------
+   A thumbnail and a link. No iframe, no YouTube script, no third-party cookie
+   set on a reader who never pressed play — an embed that costs half a
+   megabyte to advertise a video most visitors will not watch is a bad trade,
+   and the privacy answer is the same answer. */
+.videocard {
+  display: block;
+  position: relative;
+  margin: 1.8rem 0 0.6rem;
+  border: 1px solid var(--rule);
+  background: var(--paper-alt);
+  text-decoration: none;
+  color: var(--ink-soft);
+}
+
+.videocard img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.videocard:hover {
+  border-color: var(--accent);
+}
+
+.play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3.6rem;
+  height: 2.5rem;
+  border-radius: 4px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1;
+  transition: border-color 0.12s ease;
+}
+
+.videocard:hover .play {
+  border-color: var(--accent);
+}
+
+.videometa {
+  display: block;
+  margin-bottom: 1.4rem;
+  color: var(--ink-soft);
+}
