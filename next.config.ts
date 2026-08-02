@@ -119,6 +119,12 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        // The 1:1 portrait is fetched cross-origin by profile-picture uploads
+        // (GitHub/Google/Substack dialogs) — CORS open, it is a public avatar.
+        source: "/luis-1by1.jpg",
+        headers: [{ key: "Access-Control-Allow-Origin", value: "*" }],
+      },
+      {
         // llms.txt is markdown by content and .txt by extension. Declare the
         // charset so an agent fetching it does not have to guess.
         source: "/llms.txt",
