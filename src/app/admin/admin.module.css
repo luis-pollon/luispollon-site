@@ -1,0 +1,185 @@
+/* =========================================================================
+   /admin — operator hub, page-scoped styles
+
+   No new design language. The panel is built from the same four parts as
+   every other page: rules made of --rule, labels in --ink-soft, facts in
+   mono, headings in real small caps from globals.css. The only thing that is
+   genuinely new here is the SET/EMPTY state marker, and it is the `.badge`
+   idea from globals with a second, quieter state.
+
+   This page leans harder on mono than the rest of the site on purpose: it is
+   the one page addressed to the operator rather than the reader. Prose still
+   sets in the serif — the mono carries keys, URLs and figures, which is the
+   same division of labour used everywhere else.
+   ========================================================================= */
+
+/* ---------- the standing note at the top ---------- */
+.warn {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 0.9rem 0;
+  margin: 1.4rem 0 3.2rem;
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+}
+
+/* The label is mono, the sentence under it is not. A whole paragraph at the
+   mono's 0.78rem is a paragraph nobody reads, and the site already has a
+   convention for this: the label carries the machine fact, the serif carries
+   the prose. */
+.warnLead {
+  display: block;
+  color: var(--accent);
+  margin-bottom: 0.35rem;
+}
+
+/* ---------- i. instruments ---------- */
+.tools {
+  list-style: none;
+}
+
+.tools li {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 0 1.2rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.tools li:first-child {
+  border-top: 1px solid var(--rule);
+}
+
+/* Who owns the instrument — vercel, google, microsoft, github. Grouping by
+   vendor is what makes the list scannable when you are looking for a login
+   rather than for a number. */
+.toolWho {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  color: var(--ink-soft);
+  opacity: 0.7;
+  padding-top: 0.32rem;
+}
+
+.toolName {
+  grid-column: 2;
+  font-size: 1.1rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.toolName:hover,
+.toolName:focus-visible {
+  color: var(--accent);
+}
+
+/* The destination, written out. An operator hub that hides its URLs behind
+   link text is a hub you cannot copy out of, or check before you click. */
+.toolHref {
+  grid-column: 2;
+  color: var(--ink-soft);
+  opacity: 0.72;
+  overflow-wrap: anywhere;
+}
+
+.toolWhat {
+  grid-column: 2;
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  margin-top: 0.15rem;
+}
+
+/* ---------- ii. canonical facts ---------- */
+.figure {
+  font-family: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+
+/* `p + p` in globals.css cannot reach across a blockquote, so the space on
+   both sides of this block is declared here rather than inherited. */
+.bio {
+  border-left: 1px solid var(--rule);
+  padding-left: 1.3rem;
+  margin: 1.8rem 0 1.2rem;
+}
+
+.bioLabel {
+  display: block;
+  color: var(--ink-soft);
+  opacity: 0.8;
+  margin-bottom: 0.55rem;
+}
+
+/* ---------- iii. status ---------- */
+.env {
+  list-style: none;
+}
+
+.env li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.env li:first-child {
+  border-top: 1px solid var(--rule);
+}
+
+.envKey {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.envWhat {
+  display: block;
+  color: var(--ink-soft);
+  opacity: 0.75;
+  margin-top: 0.1rem;
+}
+
+/* SET reads as present, EMPTY as absent — colour and border only, never the
+   value. The distinction has to survive a greyscale print, so the empty state
+   is also dashed. */
+.state {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  border-radius: 2px;
+  padding: 0.1em 0.45em;
+}
+
+.state[data-state="set"] {
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.state[data-state="empty"] {
+  color: var(--ink-soft);
+  border: 1px dashed var(--rule);
+}
+
+/* One column under 720px: the vendor label stops being a gutter and becomes a
+   kicker above the name. Every child has to be re-pinned to column 1 — leaving
+   `grid-column: 2` on three of them against a single-column template creates an
+   implicit second track and lays the name on top of the label. */
+@media (max-width: 720px) {
+  .tools li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .toolWho,
+  .toolName,
+  .toolHref,
+  .toolWhat {
+    grid-column: 1;
+  }
+  .toolWho {
+    grid-row: auto;
+    padding-top: 0;
+    margin-bottom: 0.15rem;
+  }
+}

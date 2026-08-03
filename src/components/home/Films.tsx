@@ -1,18 +1,23 @@
+import Image from "next/image";
 import Link from "next/link";
-import { filmBySlug } from "@/data/films";
+import { filmBySlug, plateImage } from "@/data/films";
 
 /**
  * IV. Films — a strip of three, then the door to the library.
  *
- * Titles and years come from the archive register in `data/films.ts`, so the
- * home cannot advertise a film the library does not have. Only the three slugs
- * are chosen here.
+ * Titles and frames come from the archive register in `data/films.ts`, so the
+ * home cannot advertise a film the library does not have, and cannot show a
+ * different frame for it than /films does. Only the three slugs are chosen here.
  *
- * The tiles are 16:9 CSS placeholders carrying `data-still`, the slug of the
- * frame that will replace each one — the posters exist (`posterUrl()`), but
- * they live on Unsunk's bucket, and the home does not spend a third-party
- * connection and three JPEGs on decoration. They are not links either: the only
- * destination this section promises is /films, and it is real.
+ * THE FRAMES are the archive's own plates (`plateImage()`), hot-linked from
+ * Unsunk's public bucket like every other frame on this site — one source of
+ * truth per film, no second copy in /public to re-grade. They are 16:9 with the
+ * file's real dimensions declared, so the strip holds its height from first
+ * paint, and all three are lazy: section IV is a long way below the fold.
+ * `data-still` keeps the slug on the tile for anything that needs to find it.
+ *
+ * They are not links: the only destination this section promises is /films, and
+ * it is real.
  */
 
 /**
@@ -49,11 +54,24 @@ export default function Films() {
       </p>
 
       <div className="films">
-        {selected.map((f) => (
-          <div className="f mono" key={f.slug} data-still={f.slug}>
-            {f.title}
-          </div>
-        ))}
+        {selected.map((f) => {
+          const plate = plateImage(f);
+          return (
+            <figure className="f" key={f.slug} data-still={f.slug}>
+              <span className="fframe">
+                <Image
+                  src={plate.src}
+                  alt={plate.alt}
+                  width={plate.width}
+                  height={plate.height}
+                  sizes="(max-width: 720px) 46vw, 180px"
+                  loading="lazy"
+                />
+              </span>
+              <figcaption className="mono">{f.title}</figcaption>
+            </figure>
+          );
+        })}
       </div>
 
       <Link href="/films">Browse the full library →</Link>

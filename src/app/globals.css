@@ -375,11 +375,19 @@ p + p {
 .work li:first-child {
   border-top: 1px solid var(--rule);
 }
+/* One plate, 3:2, at a fixed width — the register hands every entry a
+   photograph (see data/works.ts) and they are all different shapes, so the box
+   is the thing that stays constant and the picture is cropped into it. The
+   ratio is declared here rather than left to the file, which is what keeps the
+   column from moving while the frames load. The empty variant — the box with
+   initials in it, still used inside the client-sites case — is the same box
+   with type in it instead of a picture, which is why the centring stays. */
 .thumb {
   flex: 0 0 122px;
   aspect-ratio: 3 / 2;
   background: var(--paper-alt);
   border: 1px solid var(--rule);
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -389,6 +397,11 @@ p + p {
   font-size: 1.05rem;
   align-self: flex-start;
   margin-top: 0.3rem;
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .work-body {
   min-width: 0;
@@ -459,7 +472,12 @@ p + p {
   font-size: 1rem;
 }
 
-/* ---------- films strip ---------- */
+/* ---------- films strip ----------
+   Three real frames out of the archive, same plates /films shows. The tile is
+   the frame plus a caption under it rather than a title laid over the picture:
+   a name on top of a photograph is a poster, and this page sets captions in the
+   margin everywhere else. Same box as .filmframe — 16:9, --rule, --paper-alt
+   holding the space until the picture lands. */
 .films {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -467,13 +485,25 @@ p + p {
   margin: 1.2rem 0 0.9rem;
 }
 .films .f {
+  min-width: 0;
+  color: var(--ink-soft);
+}
+.films .fframe {
+  display: block;
   aspect-ratio: 16 / 9;
   background: var(--paper-alt);
   border: 1px solid var(--rule);
-  display: flex;
-  align-items: flex-end;
-  padding: 0.5rem 0.6rem;
-  color: var(--ink-soft);
+  overflow: hidden;
+}
+.films .fframe img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.films figcaption {
+  margin-top: 0.45rem;
+  font-size: 0.88rem;
+  line-height: 1.35;
 }
 
 /* ---------- footer / colophon ---------- */
@@ -708,6 +738,21 @@ footer a {
   filter: none;
 }
 
+/* The same treatment for the two lists of frames on this page — the work
+   plates and the film strip. Neither is a link, so the reveal is hung on the
+   row and the tile rather than on an anchor, but the behaviour is the one the
+   portrait and the /films grid already set: dimmed to the value of the type,
+   restored when a reader points at it. */
+[data-theme="dark"] .thumb img,
+[data-theme="dark"] .films .fframe img {
+  filter: brightness(0.82) saturate(0.85);
+  transition: filter 0.25s ease;
+}
+[data-theme="dark"] .work li:hover .thumb img,
+[data-theme="dark"] .films .f:hover .fframe img {
+  filter: none;
+}
+
 /* =========================================================================
    films — the dated archive (IV) and the eight film pages
 
@@ -845,6 +890,91 @@ h1 .aside {
     grid-template-columns: minmax(0, 1fr);
     gap: 1.8rem;
   }
+}
+
+/* =========================================================================
+   consent — the one-line note at the foot of the page
+
+   Not a modal: no scrim, no trap, no rounded card floating over the text. It
+   is a rule across the bottom of the spread with a footnote on it, built from
+   the same three parts as everything else — --rule for the line, --paper-alt
+   for the ground, mono for the voice. It never appears in the server HTML
+   (see components/ConsentBanner.tsx), so it costs the page nothing until the
+   reader's own browser decides it is owed.
+   ========================================================================= */
+.consent {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  background: var(--paper-alt);
+  border-top: 1px solid var(--rule);
+  padding: 0.7rem 1.4rem calc(0.7rem + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+/* Narrow: the note stacks over its two answers. Wide: one line, centred on the
+   same axis as the text column above it, so it reads as part of the page and
+   not as something pasted over it. */
+@media (min-width: 640px) {
+  .consent {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+    gap: 1.4rem;
+  }
+}
+
+.consent-note {
+  color: var(--ink-soft);
+}
+
+.consent-acts {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Same button as the theme toggle in the rail — one control shape in the whole
+   site. Both answers carry it: an "allow" that looks like a button and a
+   "decline" that looks like fine print is not a question, it is a nudge. */
+.consentbtn {
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-family: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+  padding: 0.3rem 0.7rem;
+  transition:
+    color 0.12s,
+    border-color 0.12s;
+}
+.consentbtn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* The colophon's way back to the question. A button that has to pass for a
+   word in a running line, so it inherits everything and keeps only the
+   underline that marks it as something you can press. */
+.consentlink {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.consentlink:hover {
+  color: var(--accent);
 }
 
 @media (prefers-reduced-motion: reduce) {

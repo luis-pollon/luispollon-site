@@ -55,14 +55,24 @@ export type Film = {
   plate?: { path: string; width: number; height: number; alt: string };
 };
 
+/**
+ * Absolute URL for anything in Unsunk's public case library.
+ *
+ * The bucket constant exists once on this site and this is the only way to
+ * reach it — `src/data/works.ts` fronts its entries with frames out of the
+ * same library, and two hand-written copies of a bucket host is exactly the
+ * kind of thing that survives until the day the host changes.
+ */
+export const caseAsset = (path: string) => `${BUCKET}/${path}`;
+
 /** One video per film. Never two. */
-export const videoUrl = (f: Film) => `${BUCKET}/${f.slug}/hero.mp4`;
+export const videoUrl = (f: Film) => caseAsset(`${f.slug}/hero.mp4`);
 /** Frame grab, same aspect ratio as the file it fronts. */
-export const posterUrl = (f: Film) => `${BUCKET}/${f.slug}/poster.jpg`;
+export const posterUrl = (f: Film) => caseAsset(`${f.slug}/poster.jpg`);
 /** What the archive grid shows: the plate if there is one, else the poster. */
 export const plateImage = (f: Film) =>
   f.plate
-    ? { src: `${BUCKET}/${f.plate.path}`, ...f.plate }
+    ? { src: caseAsset(f.plate.path), ...f.plate }
     : { src: posterUrl(f), width: f.width, height: f.height, alt: f.alt };
 /** The full case, with credits, on Unsunk. */
 export const caseUrl = (f: Film) =>

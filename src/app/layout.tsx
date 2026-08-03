@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { garamond, plexMono } from "./fonts";
 import Rail from "@/components/Rail";
+import Analytics from "@/components/Analytics";
+import ConsentBanner from "@/components/ConsentBanner";
 import { DESCRIPTION, SITE_URL, graph, serializeJsonLd } from "@/lib/schema";
 import "./globals.css";
 
@@ -90,6 +92,14 @@ export default function RootLayout({
           <Rail />
           {children}
         </div>
+        {/*
+          Both of these render nothing on the server: the banner waits for
+          localStorage to be read, and the gated tags wait for the answer in
+          it. What ships in the HTML is the page — the measurement is appended
+          afterwards, by the reader's browser, with the reader's permission.
+        */}
+        <ConsentBanner />
+        <Analytics />
       </body>
     </html>
   );
