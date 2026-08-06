@@ -89,6 +89,10 @@ export const DESCRIPTION =
 export const SAME_AS = [
   "https://www.linkedin.com/in/luispollon",
   "https://www.youtube.com/@LuisPollon",
+  // Both officially linked to the entity as Search Console platform
+  // properties (Aug 2026) — the strongest corroboration a social handle gets.
+  "https://www.instagram.com/luispollon/",
+  "https://www.tiktok.com/@luispollon_",
 ] as const;
 
 /**
